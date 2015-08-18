@@ -23,7 +23,7 @@ feature_labels <- read.table('features.txt', stringsAsFactors=FALSE,
 # Read subject ids for each measurement in the test dataset
 subj_test <- read.table('test/subject_test.txt', col.names=c('Subject'))
 
-# This is the number of measurements done by each of the nine subjects
+# This is the number of measurements recorded for each of the nine subjects
 # in the test dataset:
 #> table(subj_test)
 #subj_test
@@ -43,7 +43,7 @@ activities_test$activity <- factor(activities_test$activity,
 #'data.frame':	2947 obs. of  1 variable:
 # $ activity: Factor w/ 6 levels "WALKING","WALKING_UPSTAIRS",..: 5 5 5 5 5 5 5 5 5 5 ...
 
-# Here is how many activities of each class was done in the test dataset:
+# Here is how many activities of each class were done in the test dataset:
 # > table(activities_test)
 #activities_test
 #           WALKING   WALKING_UPSTAIRS WALKING_DOWNSTAIRS            SITTING 
@@ -59,7 +59,7 @@ measurements_test <- read.table('test/X_test.txt')
 # TODO include fBodyGyro-meanFreq()-X ?
 mean_or_std_labels <- grep('mean()|std()', feature_labels$label)
 measurements_test <- measurements_test[,mean_or_std_labels]
-# label the test dataset with descriptive variable names.
+# Label the test dataset with descriptive variable names.
 colnames(measurements_test) <- feature_labels$label[mean_or_std_labels]
 
 # TODO use cbind to prepend coluns
@@ -74,7 +74,7 @@ measurements_test$activity <- activities_test$activity
 # Read subject ids for each measurement in the training dataset
 subj_train <- read.table('train/subject_train.txt', col.names=c('Subject'))
 
-# This is the number of measurements done by each of the 21 subjects
+# This is the number of measurements recorded for each of the 21 subjects
 # in the train dataset:
 #> table(subj_train)
 #subj_train
@@ -96,7 +96,7 @@ activities_train$activity <- factor(activities_train$activity,
 #'data.frame':	7352 obs. of  1 variable:
 # $ activity: Factor w/ 6 levels "WALKING","WALKING_UPSTAIRS",..: 5 5 5 5 5 5 5 5 5 5 ...
 
-# Here is how many activities of each class was done in the train dataset:
+# Here is how many activities of each class were done in the train dataset:
 #> table(activities_train)
 #activities_train
 #           WALKING   WALKING_UPSTAIRS WALKING_DOWNSTAIRS            SITTING 
@@ -111,7 +111,7 @@ measurements_train <- read.table('train/X_train.txt')
 # Select only the features containing 'mean' or 'std' in their names
 # TODO include fBodyGyro-meanFreq()-X ?
 measurements_train <- measurements_train[,mean_or_std_labels]
-# label the train dataset with descriptive variable names.
+# Label the train dataset with descriptive variable names.
 colnames(measurements_train) <- feature_labels$label[mean_or_std_labels]
 
 # TODO use cbind to prepend coluns
@@ -125,3 +125,4 @@ measurements_train$activity <- activities_train$activity
 
 measurements <- rbind(measurements_train, measurements_test)
 
+# From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
