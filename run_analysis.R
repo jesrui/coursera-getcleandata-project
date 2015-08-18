@@ -4,21 +4,18 @@
 # https://class.coursera.org/getdata-031/human_grading/view/courses/975115/assessments/3/submissions
 ################
 
-subj_test <- read.csv('test/subject_test.txt', header = FALSE, sep = " ")
+subj_test <- read.table('test/subject_test.txt', col.names=c('Subject'))
 
 table(subj_test)
 #subj_test
 #  2   4   9  10  12  13  18  20  24 
 #302 317 288 294 320 327 364 354 381 
 #
-colnames(subj_test) <- c('Subject')
 
-activity_labels <- read.csv('activity_labels.txt', header=FALSE, sep = ' ',
-                            col.names=c('id','label'))
+activity_labels <- read.table('activity_labels.txt', col.names=c('id','label'))
 activity_factor <- factor(activity_labels$id, labels=activity_labels$label)
 
-activities_test <- read.csv('test/y_test.txt', header=FALSE, sep = ' ',
-                            col.names=c('activity'))
+activities_test <- read.table('test/y_test.txt', col.names=c('activity'))
 # Use descriptive activity names to name the activities in the test dataset
 activities_test$activity <- factor(activities_test$activity,
                                    labels=activity_factor)
@@ -41,23 +38,22 @@ table(activities_test)
 # 489 fBodyGyro-bandsEnergy()-1,8
 # ...
 
-feature_labels <- read.csv('features.txt', header=FALSE, sep = ' ',
-                            stringsAsFactors=FALSE, col.names=c('id','label'))
+feature_labels <- read.table('features.txt', stringsAsFactors=FALSE,
+                             col.names=c('id','label'))
 
-# TODO rename to meassurements_test
-features_test <- read.table('test/X_test.txt')
+measurements_test <- read.table('test/X_test.txt')
 
 # Select only the variables containing 'mean' or 'std' in their names
 # TODO include fBodyGyro-meanFreq()-X ?
 mean_or_std_labels <- grep('mean()|std()', feature_labels$label)
-features_test <- features_test[,mean_or_std_labels]
+measurements_test <- measurements_test[,mean_or_std_labels]
 # label the test dataset with descriptive variable names.
-colnames(features_test) <- feature_labels$label[mean_or_std_labels]
+colnames(measurements_test) <- feature_labels$label[mean_or_std_labels]
 
 # TODO use cbind to prepend coluns
 # cbind(a=rnorm(5),X)
 # Add a column containing the subject id of each observation
-features_test$Subject <- subj_test$Subject
+measurements_test$Subject <- subj_test$Subject
 # Add a column containing the activity of each observation
-features_test$activity <- activities_test$activity
+measurements_test$activity <- activities_test$activity
 
