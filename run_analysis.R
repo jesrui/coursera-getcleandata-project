@@ -1,8 +1,10 @@
-################
+################################################################################
 # Getting and Cleaning Data
 # Course Project
 # https://class.coursera.org/getdata-031/human_grading/view/courses/975115/assessments/3/submissions
-################
+################################################################################
+
+library(plyr)
 
 # Read the names and ids of the activities
 activity_labels <- read.table('activity_labels.txt', col.names=c('id','label'))
@@ -126,3 +128,94 @@ measurements_train$activity <- activities_train$activity
 measurements <- rbind(measurements_train, measurements_test)
 
 # From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
+
+# change column names to simplfy ddply command below
+colnames(measurements)[1:79] = paste0('c',1:79)
+measurementsMeans <- ddply(measurements,.(Subject,activity),summarize,
+                           mean.c1=mean(c1),
+                           mean.c2=mean(c2),
+                           mean.c3=mean(c3),
+                           mean.c4=mean(c4),
+                           mean.c5=mean(c5),
+                           mean.c6=mean(c6),
+                           mean.c7=mean(c7),
+                           mean.c8=mean(c8),
+                           mean.c9=mean(c9),
+                           mean.c10=mean(c10),
+                           mean.c11=mean(c11),
+                           mean.c12=mean(c12),
+                           mean.c13=mean(c13),
+                           mean.c14=mean(c14),
+                           mean.c15=mean(c15),
+                           mean.c16=mean(c16),
+                           mean.c17=mean(c17),
+                           mean.c18=mean(c18),
+                           mean.c19=mean(c19),
+                           mean.c20=mean(c20),
+                           mean.c21=mean(c21),
+                           mean.c22=mean(c22),
+                           mean.c23=mean(c23),
+                           mean.c24=mean(c24),
+                           mean.c25=mean(c25),
+                           mean.c26=mean(c26),
+                           mean.c27=mean(c27),
+                           mean.c28=mean(c28),
+                           mean.c29=mean(c29),
+                           mean.c30=mean(c30),
+                           mean.c31=mean(c31),
+                           mean.c32=mean(c32),
+                           mean.c33=mean(c33),
+                           mean.c34=mean(c34),
+                           mean.c35=mean(c35),
+                           mean.c36=mean(c36),
+                           mean.c37=mean(c37),
+                           mean.c38=mean(c38),
+                           mean.c39=mean(c39),
+                           mean.c40=mean(c40),
+                           mean.c41=mean(c41),
+                           mean.c42=mean(c42),
+                           mean.c43=mean(c43),
+                           mean.c44=mean(c44),
+                           mean.c45=mean(c45),
+                           mean.c46=mean(c46),
+                           mean.c47=mean(c47),
+                           mean.c48=mean(c48),
+                           mean.c49=mean(c49),
+                           mean.c50=mean(c50),
+                           mean.c51=mean(c51),
+                           mean.c52=mean(c52),
+                           mean.c53=mean(c53),
+                           mean.c54=mean(c54),
+                           mean.c55=mean(c55),
+                           mean.c56=mean(c56),
+                           mean.c57=mean(c57),
+                           mean.c58=mean(c58),
+                           mean.c59=mean(c59),
+                           mean.c60=mean(c60),
+                           mean.c61=mean(c61),
+                           mean.c62=mean(c62),
+                           mean.c63=mean(c63),
+                           mean.c64=mean(c64),
+                           mean.c65=mean(c65),
+                           mean.c66=mean(c66),
+                           mean.c67=mean(c67),
+                           mean.c68=mean(c68),
+                           mean.c69=mean(c69),
+                           mean.c70=mean(c70),
+                           mean.c71=mean(c71),
+                           mean.c72=mean(c72),
+                           mean.c73=mean(c73),
+                           mean.c74=mean(c74),
+                           mean.c75=mean(c75),
+                           mean.c76=mean(c76),
+                           mean.c77=mean(c77),
+                           mean.c78=mean(c78),
+                           mean.c79=mean(c79))
+
+# use meaningful names for mean columns of the new data frame
+
+clean_feature_labels <- feature_labels$label[mean_or_std_labels]
+clean_feature_labels <- gsub('[()]','', clean_feature_labels)
+clean_feature_labels <- gsub('-','.', clean_feature_labels)
+
+colnames(measurementsMeans)[3:81] = paste0('mean.',clean_feature_labels)
