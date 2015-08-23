@@ -5,6 +5,7 @@
 ################################################################################
 
 library(plyr)
+library(dplyr)
 
 # Read the names and ids of the activities
 activity_labels <- read.table('activity_labels.txt', col.names=c('id','label'))
@@ -131,6 +132,8 @@ measurements <- rbind(measurements_train, measurements_test)
 
 # change column names to simplfy ddply command below
 colnames(measurements)[1:79] = paste0('c',1:79)
+# XXX is there a way to generate sumarize arguments from colnames and pass them
+# somehow (perhaps in a list) to ddply?
 measurementsMeans <- ddply(measurements,.(Subject,activity),summarize,
                            mean.c1=mean(c1),
                            mean.c2=mean(c2),
@@ -219,3 +222,11 @@ clean_feature_labels <- gsub('[()]','', clean_feature_labels)
 clean_feature_labels <- gsub('-','.', clean_feature_labels)
 
 colnames(measurementsMeans)[3:81] = paste0('mean.',clean_feature_labels)
+
+measurementsMeans2 <- measurements %>%
+        group_by(Subject,activity) %>%
+        summarise_each(funs(mean))
+
+measurementsMeans2 <- as.data.frame(measurementsMeans2)
+
+colnames(measurementsMeans2)[3:81] = paste0('mean.',clean_feature_labels)
