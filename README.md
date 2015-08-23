@@ -34,13 +34,13 @@ an R shell there and source the script:
 
     source('../coursera-getcleandata-project/run_analysis.R')
 
-(where `../coursera-getcleandata-project/` is the path to the directory where you cloned the project
-repository).
+(where `../coursera-getcleandata-project/` is the path to the directory where
+ you cloned the project repository).
 
 The script produces two tidy datasets:
 
 - `measurements` the result of step 4
-- `measurementsMeans` the seult of step 5
+- `measurementsMeans` the result of step 5
 
 # `measurementsMeans.txt`
 
