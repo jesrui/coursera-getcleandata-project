@@ -2,6 +2,7 @@
 # Getting and Cleaning Data
 # Course Project
 # https://class.coursera.org/getdata-031/human_grading/view/courses/975115/assessments/3/submissions
+# https://github.com/jesrui/coursera-getcleandata-project
 ################################################################################
 
 library(dplyr)
